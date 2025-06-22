@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHOP - Login & Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fff8f0, #fff0e0);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 450px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(255, 140, 0, 0.15);
+            overflow: hidden;
+            margin: 20px auto;
+            transition: all 0.4s ease;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #ff8c00, #ff6a00);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            padding: 35px 30px;
+            position: relative;
+        }
+        
+        .form-toggle {
+            display: flex;
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 25px;
+        }
+        
+        .toggle-btn {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+        
+        .toggle-btn.active {
+            background: #ff8c00;
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 140, 0, 0.25);
+        }
+        
+        .form-group {
+            margin-bottom: 22px;
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 15px;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #fcfcfc;
+        }
+        
+        .form-control:focus {
+            border-color: #ff8c00;
+            box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.2);
+            outline: none;
+            background-color: #fff;
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .remember-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .custom-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .custom-checkbox.checked {
+            background-color: #ff8c00;
+            border-color: #ff8c00;
+        }
+        
+        .custom-checkbox.checked::after {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 12px;
+            color: white;
+        }
+        
+        .checkbox-label {
+            font-size: 15px;
+            color: #555;
+            cursor: pointer;
+        }
+        
+        .forgot-link {
+            color: #ff8c00;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+        
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            border-radius: 12px;
+            border: none;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #ff8c00, #ff6a00);
+            color: white;
+            box-shadow: 0 6px 15px rgba(255, 140, 0, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(to right, #ff7b00, #ff5900);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.5);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #ff8c00;
+            font-weight: 600;
+            border: 2px solid #ffd8b8;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #fff9f2;
+            transform: translateY(-2px);
+        }
+        
+        .progress-container {
+            margin: 25px 0;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #ff8c00, #ff6a00);
+            width: 8.04%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #eee;
+        }
+        
+        .divider-text {
+            padding: 0 15px;
+            color: #999;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .footer-links {
+            text-align: center;
+            font-size: 15px;
+            color: #666;
+        }
+        
+        .footer-links a {
+            color: #ff8c00;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 5px;
+        }
+        
+        .form-section {
+            display: none;
+        }
+        
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 16px;
+            }
+            
+            .header {
+                padding: 25px 15px;
+            }
+            
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .form-container {
+                padding: 25px 20px;
+            }
+            
+            .btn {
+                padding: 16px;
+                font-size: 16px;
+            }
+        }
+        
+        .password-strength {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .strength-bar {
+            height: 4px;
+            flex: 1;
+            background: #eee;
+            border-radius: 2px;
+        }
+        
+        .strength-bar.active {
+            background: #ff8c00;
+        }
+        
+        .verification-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .verification-input {
+            flex: 1;
+        }
+        
+        .send-code-btn {
+            background: #ff8c00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 15px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .send-code-btn:hover {
+            background: #ff7b00;
+        }
+        
+        .send-code-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: #f44336;
+        }
+        
+        .notification i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .close-notification {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+        
+        .password-match {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .reset-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ff8c00;
+        }
+        
+        .back-to-login {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #ff8c00;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <div class="notification-content" id="notification-content">Success message</div>
+        <button class="close-notification" id="close-notification">&times;</button>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo"><i class="fas fa-store"></i></div>
+            <h1>WHOP</h1>
+            <p>Join our community today</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-toggle">
+                <div class="toggle-btn active" data-target="login-form">Login</div>
+                <div class="toggle-btn" data-target="register-form">Register</div>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="form-section active">
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" class="form-control" id="login-phone" placeholder="Enter your phone number" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control" id="login-password" placeholder="Enter your password" required>
+                        <i class="fas fa-eye toggle-password" data-target="login-password"></i>
+                    </div>
+                </div>
+                
+                <div class="remember-row">
+                    <div class="checkbox-container">
+                        <div class="custom-checkbox checked" id="remember-checkbox"></div>
+                        <span class="checkbox-label">Remember me</span>
+                    </div>
+                    <a href="#" class="forgot-link" id="forgot-password-link">Forgot password?</a>
+                </div>
+                
+                <button class="btn btn-primary" id="login-btn">Login to Account</button>
+                
+                <div class="footer-links">
+                    Don't have an account? <a href="#" class="switch-form" data-target="register-form">Sign up</a>
+                </div>
+            </div>
+            
+            <!-- Registration Form -->
+            <div id="register-form" class="form-section">
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" class="form-control" id="phone-number" placeholder="Enter your phone number" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control" id="reg-password" placeholder="Create a password" required>
+                        <i class="fas fa-eye toggle-password" data-target="reg-password"></i>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control" id="reg-confirm-password" placeholder="Confirm your password" required>
+                        <i class="fas fa-eye toggle-password" data-target="reg-confirm-password"></i>
+                    </div>
+                    <div class="password-match" id="password-match">Passwords do not match!</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Verification Code</label>
+                    <div class="verification-container">
+                        <div class="input-with-icon verification-input">
+                            <i class="fas fa-shield-alt input-icon"></i>
+                            <input type="text" class="form-control" id="verification-code" placeholder="Enter verification code" required>
+                        </div>
+                        <button class="send-code-btn" id="send-code-btn">Send Code</button>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Verification progress</span>
+                        <span id="progress-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Invitation Code (Optional)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-gift input-icon"></i>
+                        <input type="text" class="form-control" id="invitation-code" placeholder="Enter invitation code">
+                    </div>
+                </div>
+                
+                <div class="checkbox-container" style="margin: 20px 0;">
+                    <div class="custom-checkbox checked" id="terms-checkbox"></div>
+                    <span class="checkbox-label">I agree to the <a href="#" style="color: #ff8c00; text-decoration: none;">Terms of Service</a> and <a href="#" style="color: #ff8c00; text-decoration: none;">Privacy Policy</a></span>
+                </div>
+                
+                <button class="btn btn-primary" id="register-btn">Create Account</button>
+                
+                <div class="footer-links">
+                    Already have an account? <a href="#" class="switch-form" data-target="login-form">Sign in</a>
+                </div>
+            </div>
+            
+            <!-- Password Reset Form -->
+            <div id="reset-password-form" class="form-section">
+                <h2 class="reset-title">Reset Your Password</h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" class="form-control" id="reset-phone" placeholder="Enter your registered phone number" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Verification Code</label>
+                    <div class="verification-container">
+                        <div class="input-with-icon verification-input">
+                            <i class="fas fa-shield-alt input-icon"></i>
+                            <input type="text" class="form-control" id="reset-verification-code" placeholder="Enter verification code" required>
+                        </div>
+                        <button class="send-code-btn" id="reset-send-code-btn">Send Code</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control" id="new-password" placeholder="Create a new password" required>
+                        <i class="fas fa-eye toggle-password" data-target="new-password"></i>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                        <div class="strength-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Confirm New Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-control" id="confirm-new-password" placeholder="Confirm your new password" required>
+                        <i class="fas fa-eye toggle-password" data-target="confirm-new-password"></i>
+                    </div>
+                    <div class="password-match" id="new-password-match">Passwords do not match!</div>
+                </div>
+                
+                <button class="btn btn-primary" id="reset-password-btn">Reset Password</button>
+                
+                <a href="#" class="back-to-login switch-form" data-target="login-form">
+                    <i class="fas fa-arrow-left"></i> Back to Login
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // User storage using localStorage
+        const USER_STORAGE_KEY = "whop_users";
+        
+        // Initialize users array
+        let users = JSON.parse(localStorage.getItem(USER_STORAGE_KEY)) || [];
+        
+        // Current verification codes
+        let currentVerificationCode = null;
+        let resetVerificationCode = null;
+        
+        // Toggle between forms
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Hide all forms
+                document.querySelectorAll('.form-section').forEach(form => form.classList.remove('active'));
+                // Show target form
+                const targetForm = this.getAttribute('data-target');
+                document.getElementById(targetForm).classList.add('active');
+            });
+        });
+        
+        // Switch form from links
+        document.querySelectorAll('.switch-form').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetForm = this.getAttribute('data-target');
+                
+                // Update toggle buttons
+                document.querySelectorAll('.toggle-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if(btn.getAttribute('data-target') === targetForm) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Hide all forms
+                document.querySelectorAll('.form-section').forEach(form => form.classList.remove('active'));
+                // Show target form
+                document.getElementById(targetForm).classList.add('active');
+            });
+        });
+        
+        // Forgot password link
+        document.getElementById('forgot-password-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Hide all forms
+            document.querySelectorAll('.form-section').forEach(form => form.classList.remove('active'));
+            
+            // Show reset password form
+            document.getElementById('reset-password-form').classList.add('active');
+            
+            // Hide toggle buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.style.display = 'none';
+            });
+        });
+        
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                const input = document.getElementById(target);
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                
+                // Toggle eye icon
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+        
+        // Toggle checkboxes
+        document.querySelectorAll('.custom-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                this.classList.toggle('checked');
+            });
+        });
+        
+        // Password strength indicator
+        const passwordInput = document.getElementById('reg-password');
+        const strengthBars = document.querySelectorAll('#register-form .strength-bar');
+        
+        if (passwordInput) {
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                
+                if (password.length > 0) strength += 1;
+                if (password.length >= 8) strength += 1;
+                if (/[A-Z]/.test(password)) strength += 1;
+                if (/[0-9]/.test(password)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                
+                // Update strength bars
+                strengthBars.forEach((bar, index) => {
+                    if (index < strength) {
+                        bar.classList.add('active');
+                    } else {
+                        bar.classList.remove('active');
+                    }
+                });
+                
+                // Check password match
+                checkPasswordMatch();
+            });
+        }
+        
+        // New password strength indicator
+        const newPasswordInput = document.getElementById('new-password');
+        const newStrengthBars = document.querySelectorAll('#reset-password-form .strength-bar');
+        
+        if (newPasswordInput) {
+            newPasswordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                
+                if (password.length > 0) strength += 1;
+                if (password.length >= 8) strength += 1;
+                if (/[A-Z]/.test(password)) strength += 1;
+                if (/[0-9]/.test(password)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                
+                // Update strength bars
+                newStrengthBars.forEach((bar, index) => {
+                    if (index < strength) {
+                        bar.classList.add('active');
+                    } else {
+                        bar.classList.remove('active');
+                    }
+                });
+                
+                // Check password match
+                checkNewPasswordMatch();
+            });
+        }
+        
+        // Check password match
+        function checkPasswordMatch() {
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+            const passwordMatch = document.getElementById('password-match');
+            
+            if (password && confirmPassword && password !== confirmPassword) {
+                passwordMatch.style.display = 'block';
+                return false;
+            } else {
+                passwordMatch.style.display = 'none';
+                return true;
+            }
+        }
+        
+        // Check new password match
+        function checkNewPasswordMatch() {
+            const password = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-new-password').value;
+            const passwordMatch = document.getElementById('new-password-match');
+            
+            if (password && confirmPassword && password !== confirmPassword) {
+                passwordMatch.style.display = 'block';
+                return false;
+            } else {
+                passwordMatch.style.display = 'none';
+                return true;
+            }
+        }
+        
+        // Confirm password match check
+        if (document.getElementById('reg-confirm-password')) {
+            document.getElementById('reg-confirm-password').addEventListener('input', checkPasswordMatch);
+        }
+        
+        if (document.getElementById('confirm-new-password')) {
+            document.getElementById('confirm-new-password').addEventListener('input', checkNewPasswordMatch);
+        }
+        
+        // Verification code functionality
+        const sendCodeBtn = document.getElementById('send-code-btn');
+        const phoneNumberInput = document.getElementById('phone-number');
+        const verificationCodeInput = document.getElementById('verification-code');
+        
+        if (sendCodeBtn) {
+            sendCodeBtn.addEventListener('click', function() {
+                if (!phoneNumberInput.value) {
+                    showNotification('Please enter your phone number first', 'error');
+                    return;
+                }
+                
+                // Check if phone number is already registered
+                const phone = phoneNumberInput.value;
+                const existingUser = users.find(user => user.phone === phone);
+                if (existingUser) {
+                    showNotification('This phone number is already registered', 'error');
+                    return;
+                }
+                
+                // Disable button for 60 seconds
+                this.disabled = true;
+                let seconds = 60;
+                const originalText = this.textContent;
+                
+                const countdown = setInterval(() => {
+                    this.textContent = `Resend (${seconds}s)`;
+                    seconds--;
+                    
+                    if (seconds < 0) {
+                        clearInterval(countdown);
+                        this.textContent = 'Send Code';
+                        this.disabled = false;
+                    }
+                }, 1000);
+                
+                // Generate random 4-digit code
+                currentVerificationCode = Math.floor(1000 + Math.random() * 9000);
+                
+                // Show notification with the code
+                showNotification(`Verification code sent: ${currentVerificationCode}`);
+                
+                // Update progress
+                updateProgress(25);
+            });
+        }
+        
+        // Reset password verification code
+        const resetSendCodeBtn = document.getElementById('reset-send-code-btn');
+        const resetPhoneInput = document.getElementById('reset-phone');
+        
+        if (resetSendCodeBtn) {
+            resetSendCodeBtn.addEventListener('click', function() {
+                if (!resetPhoneInput.value) {
+                    showNotification('Please enter your phone number first', 'error');
+                    return;
+                }
+                
+                // Check if phone number is registered
+                const phone = resetPhoneInput.value;
+                const existingUser = users.find(user => user.phone === phone);
+                if (!existingUser) {
+                    showNotification('Phone number not registered. Please sign up first.', 'error');
+                    return;
+                }
+                
+                // Disable button for 60 seconds
+                this.disabled = true;
+                let seconds = 60;
+                const originalText = this.textContent;
+                
+                const countdown = setInterval(() => {
+                    this.textContent = `Resend (${seconds}s)`;
+                    seconds--;
+                    
+                    if (seconds < 0) {
+                        clearInterval(countdown);
+                        this.textContent = 'Send Code';
+                        this.disabled = false;
+                    }
+                }, 1000);
+                
+                // Generate random 4-digit code
+                resetVerificationCode = Math.floor(1000 + Math.random() * 9000);
+                
+                // Show notification with the code
+                showNotification(`Verification code sent: ${resetVerificationCode}`);
+            });
+        }
+        
+        // Progress update function
+        function updateProgress(percentage) {
+            const progressFill = document.getElementById('progress-fill');
+            const progressPercentage = document.getElementById('progress-percentage');
+            
+            if (!progressFill || !progressPercentage) return;
+            
+            // Ensure percentage is between 0 and 100
+            percentage = Math.max(0, Math.min(100, percentage));
+            
+            progressFill.style.width = `${percentage}%`;
+            progressPercentage.textContent = `${percentage.toFixed(2)}%`;
+            
+            // Change color based on percentage
+            if (percentage < 30) {
+                progressFill.style.background = '#ff6a00';
+            } else if (percentage < 70) {
+                progressFill.style.background = 'linear-gradient(to right, #ff8c00, #ff6a00)';
+            } else {
+                progressFill.style.background = 'linear-gradient(to right, #00c853, #5efc82)';
+            }
+        }
+        
+        // Update progress as user fills out form
+        const formInputs = document.querySelectorAll('#register-form input:not(#invitation-code)');
+        formInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                // Calculate how many fields are filled
+                let filledCount = 0;
+                formInputs.forEach(field => {
+                    if (field.value.trim() !== '') {
+                        filledCount++;
+                    }
+                });
+                
+                // Calculate percentage (each field contributes equally)
+                const percentage = (filledCount / formInputs.length) * 100;
+                updateProgress(percentage);
+            });
+        });
+        
+        // Registration functionality
+        document.getElementById('register-btn').addEventListener('click', function() {
+            const phone = document.getElementById('phone-number').value;
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+            const verificationCode = document.getElementById('verification-code').value;
+            const invitationCode = document.getElementById('invitation-code').value;
+            const termsChecked = document.getElementById('terms-checkbox').classList.contains('checked');
+            
+            // Validate inputs
+            if (!phone) {
+                showNotification('Please enter your phone number', 'error');
+                return;
+            }
+            
+            if (!password) {
+                showNotification('Please create a password', 'error');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showNotification('Password must be at least 8 characters', 'error');
+                return;
+            }
+            
+            if (!checkPasswordMatch()) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+            
+            if (!verificationCode) {
+                showNotification('Please enter verification code', 'error');
+                return;
+            }
+            
+            if (!termsChecked) {
+                showNotification('Please agree to the Terms of Service and Privacy Policy', 'error');
+                return;
+            }
+            
+            // Check verification code
+            if (verificationCode !== currentVerificationCode.toString()) {
+                showNotification('Invalid verification code', 'error');
+                return;
+            }
+            
+            // Check if user already exists
+            const existingUser = users.find(user => user.phone === phone);
+            if (existingUser) {
+                showNotification('This phone number is already registered', 'error');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                phone,
+                password,
+                invitationCode: invitationCode || null,
+                registrationDate: new Date().toISOString()
+            };
+            
+            // Save user
+            users.push(newUser);
+            localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(users));
+            
+            // Show success message
+            showNotification('Account created successfully! You can now login.');
+            
+            // Switch to login form
+            setTimeout(() => {
+                document.querySelector('[data-target="login-form"]').click();
+                document.getElementById('login-phone').value = phone;
+            }, 1500);
+        });
+        
+        // Login functionality
+        document.getElementById('login-btn').addEventListener('click', function() {
+            const phone = document.getElementById('login-phone').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-checkbox').classList.contains('checked');
+            
+            // Find user
+            const user = users.find(user => user.phone === phone);
+            
+            if (!user) {
+                showNotification('User not found. Please register first.', 'error');
+                return;
+            }
+            
+            if (user.password !== password) {
+                showNotification('Invalid password', 'error');
+                return;
+            }
+            
+            // Save login state if remember me is checked
+            if (rememberMe) {
+                localStorage.setItem('whop_logged_in', JSON.stringify(user.phone));
+            } else {
+                localStorage.removeItem('whop_logged_in');
+            }
+            
+            // Show success message
+            showNotification(`Welcome back, ${phone}!`);
+            
+            // Redirect to dashboard (simulated)
+            setTimeout(() => {
+                window.location.href = '#dashboard';
+                alert(`Successfully logged in as ${phone}. This would redirect to the dashboard in a real app.`);
+            }, 1500);
+        });
+        
+        // Reset password functionality
+        document.getElementById('reset-password-btn').addEventListener('click', function() {
+            const phone = document.getElementById('reset-phone').value;
+            const verificationCode = document.getElementById('reset-verification-code').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-new-password').value;
+            
+            // Validate inputs
+            if (!phone) {
+                showNotification('Please enter your phone number', 'error');
+                return;
+            }
+            
+            if (!verificationCode) {
+                showNotification('Please enter verification code', 'error');
+                return;
+            }
+            
+            if (!newPassword) {
+                showNotification('Please create a new password', 'error');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                showNotification('Password must be at least 8 characters', 'error');
+                return;
+            }
+            
+            if (!checkNewPasswordMatch()) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+            
+            // Check verification code
+            if (verificationCode !== resetVerificationCode.toString()) {
+                showNotification('Invalid verification code', 'error');
+                return;
+            }
+            
+            // Find user
+            const user = users.find(user => user.phone === phone);
+            if (!user) {
+                showNotification('Phone number not registered. Please sign up first.', 'error');
+                return;
+            }
+            
+            // Update password
+            user.password = newPassword;
+            localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(users));
+            
+            // Show success message
+            showNotification('Password reset successfully! You can now login with your new password.');
+            
+            // Switch to login form
+            setTimeout(() => {
+                document.querySelectorAll('.toggle-btn').forEach(btn => btn.style.display = 'flex');
+                document.querySelector('[data-target="login-form"]').click();
+                document.getElementById('login-phone').value = phone;
+            }, 1500);
+        });
+        
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationContent = document.getElementById('notification-content');
+            
+            notificationContent.textContent = message;
+            
+            // Set icon based on type
+            const icon = notification.querySelector('i');
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+                notification.className = 'notification show';
+            } else {
+                icon.className = 'fas fa-exclamation-circle';
+                notification.className = 'notification error show';
+            }
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Close notification
+        document.getElementById('close-notification').addEventListener('click', function() {
+            document.getElementById('notification').classList.remove('show');
+        });
+        
+        // Check for remembered login
+        window.addEventListener('DOMContentLoaded', () => {
+            const rememberedPhone = localStorage.getItem('whop_logged_in');
+            if (rememberedPhone) {
+                try {
+                    const phone = JSON.parse(rememberedPhone);
+                    document.getElementById('login-phone').value = phone;
+                    document.getElementById('remember-checkbox').classList.add('checked');
+                } catch (e) {
+                    console.error('Error parsing remembered login:', e);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
